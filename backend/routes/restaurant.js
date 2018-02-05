@@ -2,6 +2,12 @@ var express = require('express');
 var router = express.Router();
 var mongoose = require('mongoose');
 var Restaurant = require('../models/restaurant');
+var Redis = require('redis');
+var RedisClient = Redis.createClient();
+
+RedisClient.on('error', function (err) {
+    console.log('error event - ' + RedisClient.host + ':' + RedisClient.port + ' - ' + err);
+});
 
 router.route('/')
 
@@ -73,6 +79,7 @@ router.route('/')
               menu : menu
             }, function(err,result){
               if(err) {
+                  console.log(err);
                 res.status(500).send("There was a problem adding info to DB");
               } else {                
                 res.status(201).send(result);
@@ -91,14 +98,26 @@ router.route('/:restaurant_id')
         console.log("GET Restaurant");
         var RestaurantId = req.params.restaurant_id.toLowerCase();
 
-        Restaurant.findOne({id : RestaurantId}, function (err, result) {
-            if (err) {
-                res.status(404).send('There was an error getting the restaurants');
-            } else if(result){
-                res.status(200).send(result);
+        var rKey = "Restaurant#" + RestaurantId;
+
+        RedisClient.get(rKey, function(err, redisResponse) {
+            // reply is null when the key is missing 
+            console.log(redisResponse);
+            if(!err && redisResponse){
+                res.status(200).send(JSON.parse(redisResponse));
             }
             else{
-                res.status(404).send("Restaurant Not Found");
+                Restaurant.findOne({id : RestaurantId}, function (err, result) {
+                    if (err) {
+                        res.status(404).send('There was an error getting the restaurants');
+                    } else if(result){
+                        res.status(200).send(result);
+                        RedisClient.set(rKey, JSON.stringify(result));
+                    }
+                    else{
+                        res.status(404).send("Restaurant Not Found");
+                    }
+                });
             }
         });
     })
@@ -108,6 +127,9 @@ router.route('/:restaurant_id')
 
         console.log("DELETE Restaurant");
         var RestaurantId = req.params.restaurant_id.toLowerCase();
+        
+        var rKey = "Restaurant#" + RestaurantId;
+        RedisClient.del(rKey);
 
         Restaurant.remove({id : RestaurantId}, function (err, result) {
               if (err) {
@@ -175,24 +197,39 @@ router.route('/:restaurant_id/menus/:menu_id')
         var RestaurantId = req.params.restaurant_id.toLowerCase();
         var MenuId = req.params.menu_id.toLowerCase();
 
-        Restaurant.aggregate(
-            [
-              { $unwind : "$menu" },
-              { $project : { "menu" : 1, "_id" : 0 , id : 1} },
-              { $match: { id: RestaurantId, "menu.menu_id" : MenuId } },
-            ]
-            , function (err, result) {
-            if (err) {
-                res.status(404).send('There was an error getting the menus');
-            } else{
-                console.log(result);
+        var rKey = "Restaurant#" + RestaurantId + "#menu#" + MenuId;
 
-                if(result.length > 0){
-                    var Menu = result[0].menu;
-                    res.status(200).send(Menu);
-                }
-                else
-                    res.status(404).send("Restaurant Not Found");
+
+        RedisClient.get(rKey, function(err, redisResponse) {
+            // reply is null when the key is missing 
+            console.log(redisResponse);
+            if(!err && redisResponse){
+                res.status(200).send(JSON.parse(redisResponse));
+            }
+            else{
+
+                Restaurant.aggregate(
+                    [
+                        { $unwind : "$menu" },
+                        { $project : { "menu" : 1, "_id" : 0 , id : 1} },
+                        { $match: { id: RestaurantId, "menu.menu_id" : MenuId } },
+                    ]
+                    , function (err, result) {
+                    if (err) {
+                        res.status(404).send('There was an error getting the menus');
+                    } else{
+                        console.log(result);
+
+                        if(result.length > 0){
+                            var Menu = result[0].menu;
+                            res.status(200).send(Menu);
+                            RedisClient.set(rKey, JSON.stringify(Menu));
+                        }
+                        else
+                            res.status(404).send("Restaurant Not Found");
+                    }
+                });
+                
             }
         });
     })
@@ -203,6 +240,9 @@ router.route('/:restaurant_id/menus/:menu_id')
         console.log("DELETE Menu");
         var RestaurantId = req.params.restaurant_id.toLowerCase();
         var MenuId = req.params.menu_id.toLowerCase();
+
+        var rKey = "Restaurant#" + RestaurantId + "#menu#" + MenuId;
+        RedisClient.del(rKey);
 
         Restaurant.update({id : RestaurantId}, {$pull : { menu : { menu_id: MenuId }}}, function (err, result) {
             console.log(result);
@@ -279,23 +319,38 @@ router.route('/:restaurant_id/menus/:menu_id/items/:item_id')
         var MenuId = req.params.menu_id.toLowerCase();
         var ItemId = req.params.item_id.toLowerCase();
 
-        Restaurant.aggregate(
-            [
-                { $unwind : "$menu" },
-                { $project : { "menu" : 1, "_id" : 0, "id":1 } },
-                { $unwind : "$menu.menu_items" },
-                { $match: { id: RestaurantId, "menu.menu_id" : MenuId,  "menu.menu_items._id": mongoose.Types.ObjectId(ItemId)} }
-            ]
-            , function (err, result) {
-            if (err) {
-                res.status(404).send('There was an error getting the menus');
-            } else{
-                if(result.length > 0){
-                    var Menu = result[0].menu;
-                    res.status(200).send(Menu.menu_items);
-                }
-                else
-                    res.status(404).send("Restaurant Not Found");
+        var rKey = "Restaurant#" + RestaurantId + "#menu#" + MenuId + "#item#" + ItemId;
+
+
+        RedisClient.get(rKey, function(err, redisResponse) {
+            // reply is null when the key is missing 
+            console.log(redisResponse);
+            if(!err && redisResponse){
+                res.status(200).send(JSON.parse(redisResponse));
+            }
+            else{
+
+                Restaurant.aggregate(
+                    [
+                        { $unwind : "$menu" },
+                        { $project : { "menu" : 1, "_id" : 0, "id":1 } },
+                        { $unwind : "$menu.menu_items" },
+                        { $match: { id: RestaurantId, "menu.menu_id" : MenuId,  "menu.menu_items._id": mongoose.Types.ObjectId(ItemId)} }
+                    ]
+                    , function (err, result) {
+                    if (err) {
+                        res.status(404).send('There was an error getting the menus');
+                    } else{
+                        if(result.length > 0){
+                            var Menu = result[0].menu;
+                            res.status(200).send(Menu.menu_items);
+                            RedisClient.set(rKey, JSON.stringify(Menu.menu_items));
+                        }
+                        else
+                            res.status(404).send("Restaurant Not Found");
+                    }
+                });
+                
             }
         });
     })
@@ -307,6 +362,9 @@ router.route('/:restaurant_id/menus/:menu_id/items/:item_id')
         var RestaurantId = req.params.restaurant_id.toLowerCase();
         var MenuId = req.params.menu_id.toLowerCase();
         var ItemId = req.params.item_id.toLowerCase();
+
+        var rKey = "Restaurant#" + RestaurantId + "#menu#" + MenuId + "#item#" + ItemId;
+        RedisClient.del(rKey);
 
         Restaurant.update({id : RestaurantId, "menu.menu_id": MenuId}, {$pull : { "menu.$.menu_items" : { item_id: ItemId }}}, function (err, result) {
             console.log(result);
