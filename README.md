@@ -34,48 +34,43 @@ Restaurants
 
 1. Adding new restaurant
 ```javascript
-    POST http://localhost:3000/zappos/api/v1/restaurant
+    POST http://localhost:3000/zappos/api/v1/restaurants
 ```
 2. Get restaurant details
 ```javascript
-    GET http://localhost:3000/zappos/api/v1/restaurant/<restaurant-id>
+    GET http://localhost:3000/zappos/api/v1/restaurants/<restaurant-id>
 ```
 3. Delete restaurant 
 ```javascript
-    DELETE http://localhost:3000/zappos/api/v1/restaurant/<restaurant-id>
+    DELETE http://localhost:3000/zappos/api/v1/restaurants/<restaurant-id>
 ```
 
 
 4. Add Menu
 ```javascript
-    POST http://localhost:3000/zappos/api/v1/restaurant/<restaurant-id>/menu
+    POST http://localhost:3000/zappos/api/v1/restaurants/<restaurant-id>/menus
 ```
 5. Get Menu
 ```javascript
-    GET http://localhost:3000/zappos/api/v1/restaurant/<restaurant-id>/menu/<menu_type>
+    GET http://localhost:3000/zappos/api/v1/restaurants/<restaurant-id>/menus/<menu_type>
 ```
 6. Delete Menu
 ```javascript
-    DELETE http://localhost:3000/zappos/api/v1/restaurant/<restaurant-id>/menu/<menu_type>
+    DELETE http://localhost:3000/zappos/api/v1/restaurants/<restaurant-id>/menus/<menu_type>
 ```
 
 
 7. Add MenuItem
 ```javascript
-    POST http://localhost:3000/zappos/api/v1/restaurant/<restaurant-id>/menu/<menu_type>/menu_item
+    POST http://localhost:3000/zappos/api/v1/restaurants/<restaurant-id>/menus/<menu_type>/items
 ```
 
 8. Get MenuItem
 ```javascript
-    GET http://localhost:3000/zappos/api/v1/restaurant/<restaurant-id>/menu/<menu_type>/menu_item/<item_id>
+    GET http://localhost:3000/zappos/api/v1/restaurants/<restaurant-id>/menus/<menu_type>/items/<item_id>
 ```
 
 9. Delete MenuItem
 ```javascript
-    DELETE http://localhost:3000/zappos/api/v1/restaurant/<restaurant-id>/menu/<menu_type>/menu_item/<item_id>
-```
-
-10. Update MenuItem
-```javascript
-    PUT http://localhost:3000/zappos/api/v1/restaurant/<restaurant-id>/menu/<menu_type>/menu_item/<item_id>
+    DELETE http://localhost:3000/zappos/api/v1/restaurants/<restaurant-id>/menus/<menu_type>/items/<item_id>
 ```

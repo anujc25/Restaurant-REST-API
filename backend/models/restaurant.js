@@ -5,7 +5,10 @@ var MenuItem = new mongoose.Schema({
         type        : String,
         required    : true
     },
-    decription  : String,
+    decription  : {
+        type        : String,
+        default     : ""
+    },
     price       : {
         type        : Number,
         required    : true
@@ -13,8 +16,14 @@ var MenuItem = new mongoose.Schema({
 });
 
 var Menu = new mongoose.Schema({
-  menu_id: String,
-  menu_type: String,
+  menu_id: {
+    type: String,
+    required: true
+  },
+  menu_type: {
+     type: String,
+     required: true
+  },
   menu_items: [MenuItem]}
 );
 
