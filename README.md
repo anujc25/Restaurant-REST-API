@@ -1,5 +1,28 @@
 # Restaurant-REST-API
 
+| Technology    | Version       |       
+| ------------- |:-------------:|
+| Node.js       | 8.9.1         |
+| MongoDB       | 5.7           |
+| Redis         | 3.0.6         |
+
+## How to Run the Project
+
+1. Install NodeJs, MongoDB, Redis locally. [Tested with MacOSX 10.13.3]
+2. Clone or download the repository.
+3. Go to api folder. (package.json file is located here)
+4. run following command, to install node modules locally
+```javascript
+    npm install
+```
+5. run following command to start node server which exposes restaurant REST api
+```javascript
+    npm start
+```
+6. run following command to run unit tests
+```javascript
+    npm test
+```
 ## Database Schema ##
 
 ```javascript

@@ -80,7 +80,7 @@ router.route('/')
             }, function(err,result){
               if(err) {
                   console.log(err);
-                res.status(500).send("There was a problem adding info to DB");
+                res.status(400).send("Bad Request.");
               } else {                
                 res.status(201).send(result);
               }
@@ -136,7 +136,7 @@ router.route('/:restaurant_id')
                   res.status(404).send();
               } else{
                     if(result.n > 0)
-                        res.status(204).send();
+                        res.status(200).send();
                     else
                         res.status(404).send();                
               }
@@ -172,11 +172,15 @@ router.route('/:restaurant_id/menus')
         var RestaurantId = req.params.restaurant_id.toLowerCase();
 
         var menu = req.body;
+        if(!menu.menu_type){
+            res.status(400).send('Bad request.');
+        }
+
         menu.menu_id = menu.menu_type.replace(/\s+/g, '-').toLowerCase();
 
         Restaurant.update({id : RestaurantId}, {$push: { menu : menu }}, function (err, result) {
             if (err) {
-                res.status(404).send('There was an error getting the menus');
+                res.status(400).send('There was an error getting the menus');
             } else{
                 console.log(result);
                 if(result.n > 0){                    
@@ -250,7 +254,7 @@ router.route('/:restaurant_id/menus/:menu_id')
                 res.status(404).send();
             } else{
                 if(result.nModified > 0)
-                    res.status(204).send();
+                    res.status(200).send();
                 else
                     res.status(404).send();                
               }
@@ -373,7 +377,7 @@ router.route('/:restaurant_id/menus/:menu_id/items/:item_id')
                 res.status(404).send();
             } else{
                 if(result.nModified > 0)
-                    res.status(204).send();
+                    res.status(200).send();
                 else
                     res.status(404).send();                
                 }
