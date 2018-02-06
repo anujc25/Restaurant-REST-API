@@ -161,7 +161,7 @@ router.route('/:restaurant_id/menus')
                     res.status(200).send(Menus);
                 }
                 else
-                    res.status(404).send("Restaurant Not Found");
+                    res.status(404).send("Not Found");
             }
         });
     })
@@ -187,7 +187,7 @@ router.route('/:restaurant_id/menus')
                     res.status(200).send();
                 }
                 else
-                    res.status(404).send("Restaurant Not Found");
+                    res.status(404).send("Not Found");
             }
         });
     });
@@ -230,7 +230,7 @@ router.route('/:restaurant_id/menus/:menu_id')
                             RedisClient.set(rKey, JSON.stringify(Menu));
                         }
                         else
-                            res.status(404).send("Restaurant Not Found");
+                            res.status(404).send("Not Found");
                     }
                 });
                 
@@ -285,7 +285,7 @@ router.route('/:restaurant_id/menus/:menu_id/items')
                     res.status(200).send(Menu.menu_items);
                 }
                 else
-                    res.status(404).send("Restaurant Not Found");
+                    res.status(404).send("Not Found");
             }
         });
     })
@@ -351,7 +351,7 @@ router.route('/:restaurant_id/menus/:menu_id/items/:item_id')
                             RedisClient.set(rKey, JSON.stringify(Menu.menu_items));
                         }
                         else
-                            res.status(404).send("Restaurant Not Found");
+                            res.status(404).send("Not Found");
                     }
                 });
                 
