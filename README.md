@@ -54,7 +54,10 @@ Restaurants
 ```
 
 
-## Functionalities ##
+## REST API Requests  ##
+
+* Here is the sharable link for POSTMAN to use all of this request. Just Import Request from the given link to POSTMAN.
+[https://www.getpostman.com/collections/0833962d50247e7f69a0](https://www.getpostman.com/collections/0833962d50247e7f69a0)
 
 1. Adding new restaurant
 ```javascript
@@ -160,3 +163,46 @@ Restaurants
 ```javascript
     DELETE http://localhost:3000/zappos/api/v1/restaurants/<restaurant-id>/menus/<menu_type>/items/<item_id>
 ```
+
+
+## Redis for Caching ##
+
+* To compare the request performace of redis and direct mongodb access, I have added approximatly 30,000 dummy data to the mongodb.
+
+* So, that when randomly sending a GET request for the first time, I can measure response time and sending the same request again, it will hit the redis cache, I can see the response time improvement in the request.
+
+* I have attached some screenshots displaying the response time for both the scenario.
+
+    1. MongoDB Access   :   70ms
+    2. Redis Cache      :   5ms
+
+* MongoDB Hit
+![Alt text](/screenshots/mongodb_hit.png?raw=true "MongoDB hit")
+
+* Redis Cache Hit
+![Alt text](/screenshots/redis_hit.png?raw=true "Redis hit")
+
+
+## Unit Tests ##
+
+  Test Cases: Restaurant POST GET
+    ✓ POST should store new restaurant info in database and respond 201 created (75ms)
+    ✓ POST should return 404 bad request for invalid restaurant entry as name of restaurant not provided (44ms)
+    ✓ GET should return restaurant info as object
+    ✓ GET should return 404 Not Found, if requesting restaurant info with wrong restaurant id
+
+  Test Cases: Menu POST GET
+    ✓ POST should add new menu to restaurants menu list in database and respond 200 OK (39ms)
+    ✓ POST should return 404 bad request for invalid restaurant entry as name of restaurant not provided
+    ✓ GET should return menu as object (41ms)
+    ✓ GET should return 404 Not Found, if menu not found with that name in restaurant
+
+  Test Cases: Menu Items POST GET
+    ✓ POST should add new menuitem to restaurants given menu in database and respond 200 OK (56ms)
+    ✓ GET should return all menu items for given menu
+
+  Test Cases: DELETE Menu, Restaurant
+    ✓ DELETE should return 200 OK, while deleting restaurant with it's id
+    ✓ DELETE should return 200 OK, while deleting restaurant with it's id
+
+![Alt text](/screenshots/unit_tests.png?raw=true "Redis hit")
