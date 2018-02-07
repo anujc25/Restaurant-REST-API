@@ -190,6 +190,13 @@ BaseURL : localhost:3000/zappos/api/v1
 
 * To compare the request performace of redis and direct mongodb access, I have added approximatly 30,000 dummy data to the mongodb.
 
+    Import dummy data to mongodb 
+
+    ```
+        cd db_backup
+        mongorestore -d anuj_restaurant_api anuj_restaurant_api 
+    ```
+
 * So, that when randomly sending a GET request for the first time, I can measure response time and sending the same request again, it will hit the redis cache, I can see the response time improvement in the request.
 
 * I have attached some screenshots displaying the response time for both the scenario.
@@ -198,13 +205,30 @@ BaseURL : localhost:3000/zappos/api/v1
     2. Redis Cache      :   5ms
 
 * MongoDB Hit
-![Alt text](/screenshots/mongodb_hit.png?raw=true "MongoDB hit")
+![Alt text](/images/mongodb_hit.png?raw=true "MongoDB hit")
 
 * Redis Cache Hit
-![Alt text](/screenshots/redis_hit.png?raw=true "Redis hit")
+![Alt text](/images/redis_hit.png?raw=true "Redis hit")
 
 
 ## Unit Tests ##
 
-![Alt text](/screenshots/unit_tests.png?raw=true "Redis hit")
+Run following command to run unit tests
+```javascript
+    npm test
+```
+
+![Alt text](/images/unit_tests.png?raw=true "Redis hit")
+
+
+
+## Handling millions of request at once ##
+
+For handling these many request at once we can use multiple servers running the same service and we can put the mongodb database on different machine and not where the node server is currently running. 
+
+For this we can use mongodb replicaset as well as load balancer on top of the node server.
+
+If we use AWS services for handling scaling for this type of problem, Here is the server architecture diagram.
+
+![Alt text](/images/architectural_diagram.png?raw=true "Architectural Diagram")
 
