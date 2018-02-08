@@ -7,6 +7,8 @@
 | MongoDB       | 3.4.9         |
 | Redis         | 4.0.8         |
 
+Name: Anuj Chaudhari (chaudhari.anuj93@gmail.com)
+
 ## How to Run the Project
 
 1. Install NodeJs, MongoDB, Redis locally. [Tested with MacOSX 10.13.3]
