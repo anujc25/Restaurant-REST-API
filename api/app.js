@@ -27,15 +27,15 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use('/zappos/api/v1/restaurants', restaurant);
 app.get("/", function(req, res){
     res.send('Welcome to Restaurant API service. Below is the list of APIs you can use. <br> <br> \
-    1. POST http://localhost:3000/zappos/api/v1/restaurants <br> \
-    2. GET http://localhost:3000/zappos/api/v1/restaurants/:restaurant-id <br> \
-    3. DELETE http://localhost:3000/zappos/api/v1/restaurants/:restaurant-id <br> \
-    4. POST http://localhost:3000/zappos/api/v1/restaurants/:restaurant-id/menus <br> \
-    5. GET http://localhost:3000/zappos/api/v1/restaurants/:restaurant-id/menus/:menu_type <br> \
-    6. DELETE http://localhost:3000/zappos/api/v1/restaurants/:restaurant-id/menus/:menu_type <br> \
-    7. POST http://localhost:3000/zappos/api/v1/restaurants/:restaurant-id/menus/:menu_type/items <br> \
-    8. GET http://localhost:3000/zappos/api/v1/restaurants/:restaurant-id/menus/:menu_type/items/:item_id <br> \
-    9. DELETE http://localhost:3000/zappos/api/v1/restaurants/:restaurant-id/menus/:menu_type/items/:item_id <br> \
+    1. POST     /zappos/api/v1/restaurants <br> \
+    2. GET      /zappos/api/v1/restaurants/:restaurant-id <br> \
+    3. DELETE   /zappos/api/v1/restaurants/:restaurant-id <br> \
+    4. POST     /zappos/api/v1/restaurants/:restaurant-id/menus <br> \
+    5. GET      /zappos/api/v1/restaurants/:restaurant-id/menus/:menu_type <br> \
+    6. DELETE   /zappos/api/v1/restaurants/:restaurant-id/menus/:menu_type <br> \
+    7. POST     /zappos/api/v1/restaurants/:restaurant-id/menus/:menu_type/items <br> \
+    8. GET      /zappos/api/v1/restaurants/:restaurant-id/menus/:menu_type/items/:item_id <br> \
+    9. DELETE   /zappos/api/v1/restaurants/:restaurant-id/menus/:menu_type/items/:item_id <br> \
     ');
 });
 
