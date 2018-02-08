@@ -233,5 +233,8 @@ For this we can use mongodb replicaset as well as load balancer on top of the no
 
 If we use AWS services for handling scaling for this type of problem, Here is the server architecture diagram.
 
+I have hosted this service on my AWS EC2 instance. 
+Here is the link for the API server. [http://ec2-54-215-224-120.us-west-1.compute.amazonaws.com:3000](http://ec2-54-215-224-120.us-west-1.compute.amazonaws.com:3000/)
+
 ![Alt text](/images/architectural_diagram.png?raw=true "Architectural Diagram")
 
