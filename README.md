@@ -62,20 +62,20 @@ Restaurants
 BaseURL : localhost:3000/zappos/api/v1 
 
 
-| Endpoint                         | HTTP Verb | Functionality                                                               | Example                             | JSON Request | Response Code | JSON Response                                                                                                           |
-|----------------------------------|-----------|-------------------------------------------------------------------------|-------------------------------------|--------------------------------------------------------------------------------------------------------|-------------------------------------------------------------------------------------------------------------------------|------------|
-| /restaurants                                          | GET       | Get list of all the restaurants                                                   | localhost:3000/zappos/api/v1/restaurants                                        |                                                                                                        | 200 | [{"description":"Starbucks is considered the main representative of second wave coffee, initially distinguishing itself from other coffee-serving venues in the US by taste, quality, and customer experience while popularizing darkly roasted coffee","contact_no":"(408) 275-9368","area":"San Jose","cuisines":["cafe"],"menu":[{"menu_items":[{"decription":"","_id":"5a797f026d887752a071a6ae","item_name":"Coffee Latte","price":3},{"decription":"","_id":"5a797f026d887752a071a6ad","item_name":"Caffe Mocha","price":4}],"_id":"5a797f026d887752a071a6ac","menu_type":"Coffee","menu_id":"coffee"},{"menu_items":[{"decription":"","_id":"5a797f026d887752a071a6ab","item_name":"Classic Chai Tea Latte","price":2}],"_id":"5a797f026d887752a071a6aa","menu_type":"Tea","menu_id":"tea"}],"locality_count":0,"timestamp":"Tue Feb 06 2018 01:45:33 GMT-0800 (PST)","_id":"5a797f026d887752a071a6a9","id":"starbucks-san-jose","name":"Starbucks","__v":0}]                                                                       |
-| /restaurants                                          | POST      | Add new restaurant entry in the database. Will return restaurant id as string.    | localhost:3000/zappos/api/v1/restaurants                                        | {"name":"Starbucks","description":"Starbucksisconsideredthemainrepresentativeofsecondwavecoffee,initiallydistinguishingitselffromothercoffee-servingvenuesintheUSbytaste,quality,andcustomerexperiencewhilepopularizingdarklyroastedcoffee","contact_no":"(408)275-9368","area":"SanJose","cuisines":["cafe"],"menu":[{"menu_type":"Coffee","menu_items":[{"item_name":"CoffeeLatte","Description":"coffeewiththebestflovouroflatte","price":3},{"item_name":"CaffeMocha","Description":"coffeewiththebestflovourofmocha","price":4}]},{"menu_type":"Tea","menu_items":[{"item_name":"ClassicChaiTeaLatte","Description":"ClassicChaiTeawiththebestflovouroflatte","price":2}]}]}                              | 201 | {"description":"Starbucks is considered the main representative of second wave coffee, initially distinguishing itself from other coffee-serving venues in the US by taste, quality, and customer experience while popularizing darkly roasted coffee","contact_no":"(408) 275-9368","area":"San Jose","cuisines":["cafe"],"menu":[{"menu_items":[{"decription":"","_id":"5a797fbb6d887752a071a732","item_name":"Coffee Latte","price":3},{"decription":"","_id":"5a797fbb6d887752a071a731","item_name":"Caffe Mocha","price":4}],"_id":"5a797fbb6d887752a071a730","menu_type":"Coffee","menu_id":"coffee"},{"menu_items":[{"decription":"","_id":"5a797fbb6d887752a071a72f","item_name":"Classic Chai Tea Latte","price":2}],"_id":"5a797fbb6d887752a071a72e","menu_type":"Tea","menu_id":"tea"}],"locality_count":22,"timestamp":"Tue Feb 06 2018 01:45:33 GMT-0800 (PST)","_id":"5a797fbb6d887752a071a72d","id":"starbucks-22-san-jose","name":"Starbucks","__v":0}                                                       |
-| /restaurants/:RestaurantID                            | GET       | Get Restaurant information with the generated restaurant ID                       | localhost:3000/zappos/api/v1/restaurants/starbucks-san-jose                     |                                                                                                        | 200 |{"description":"Starbucks is considered the main representative of second wave coffee, initially distinguishing itself from other coffee-serving venues in the US by taste, quality, and customer experience while popularizing darkly roasted coffee","contact_no":"(408) 275-9368","area":"San Jose","cuisines":["cafe"],"menu":[{"menu_items":[{"decription":"","_id":"5a797f026d887752a071a6ae","item_name":"Coffee Latte","price":3},{"decription":"","_id":"5a797f026d887752a071a6ad","item_name":"Caffe Mocha","price":4}],"_id":"5a797f026d887752a071a6ac","menu_type":"Coffee","menu_id":"coffee"},{"menu_items":[{"decription":"","_id":"5a797f026d887752a071a6ab","item_name":"Classic Chai Tea Latte","price":2}],"_id":"5a797f026d887752a071a6aa","menu_type":"Tea","menu_id":"tea"}],"locality_count":0,"timestamp":"Tue Feb 06 2018 01:45:33 GMT-0800 (PST)","_id":"5a797f026d887752a071a6a9","id":"starbucks-san-jose","name":"Starbucks","__v":0}                                 |
-| /restaurants/:RestaurantID                            | DELETE    | Delete Restaurant information with the generated restaurant ID                    | localhost:3000/zappos/api/v1/restaurants/starbucks-san-jose                     |                                                                                                        | 200 ||
-| /restaurants/:RestaurantID/menus                      | POST      | Add new menu to the restaurant with name. Will return menu id as string           | localhost:3000/zappos/api/v1/restaurants/starbucks-san-jose/menus               | {"menu_type":"HotDrinks","menu_items":[{"item_name":"CoffeeLatte","Description":"coffeewiththebestflovouroflatte","price":3},{"item_name":"CaffeMocha","Description":"coffeewiththebestflovourofmocha","price":4}]} | 200 | |
-| /restaurants/:RestaurantID/menus                      | GET       | Get all menus of a restaurant as array                                            | localhost:3000/zappos/api/v1/restaurants/starbucks-san-jose/menus               |  | 200 | [{"menu_items":[{"decription":"","_id":"5a797f026d887752a071a6ae","item_name":"Coffee Latte","price":3},{"decription":"","_id":"5a797f026d887752a071a6ad","item_name":"Caffe Mocha","price":4}],"_id":"5a797f026d887752a071a6ac","menu_type":"Coffee","menu_id":"coffee"},{"menu_items":[{"decription":"","_id":"5a797f026d887752a071a6ab","item_name":"Classic Chai Tea Latte","price":2}],"_id":"5a797f026d887752a071a6aa","menu_type":"Tea","menu_id":"tea"},{"menu_items":[{"decription":"","_id":"5a79eed06d887752a071b2ed","item_name":"Coffee Latte","price":3},{"decription":"","_id":"5a79eed06d887752a071b2ec","item_name":"Caffe Mocha","price":4}],"_id":"5a79eed06d887752a071b2eb","menu_type":"Hot Drinks","menu_id":"hot-drinks"}]|
-| /restaurants/:RestaurantID/menus/:MenuID              | GET       | Get single menu of a restaurant with menuid.                                      | localhost:3000/zappos/api/v1/restaurants/starbucks-san-jose/menus/coffee        |                                                                                                        | 200 |{"menu_items":[{"decription":"","_id":"5a797b6d6d887752a071a69e","item_name":"Coffee Latte","price":3},{"decription":"","_id":"5a797b6d6d887752a071a69d","item_name":"Caffe Mocha","price":4}],"_id":"5a797b6d6d887752a071a69c","menu_type":"Coffee","menu_id":"coffee"} |
-| /restaurants/:RestaurantID/menus/:MenuID              | DELETE    | Delete single menu of a restaurant with menuid.                                   | localhost:3000/zappos/api/v1/restaurants/starbucks-san-jose/menus/coffee        |                                                                                                        | 200 ||
-| /restaurants/:RestaurantID/menus/:MenuID/items        | POST      | Add new menu item to the menu. Will return menuitem id.                           | localhost:3000/zappos/api/v1/restaurants/starbucks-san-jose/menus/coffee/items  | {"item_name":"Hot Chocolate","Description":"hot milk drink with chocolate cyrup","price":3}            | 200 ||
-| /restaurants/:RestaurantID/menus/:MenuID/items        | GET       | Get all the menu items of the menu as array                                       | localhost:3000/zappos/api/v1/restaurants/starbucks-san-jose/menus/coffee/items  | | 200 | [{"decription":"","_id":"5a797f026d887752a071a6ae","item_name":"CoffeeLatte","price":3},{"decription":"","_id":"5a797f026d887752a071a6ad","item_name":"CaffeMocha","price":4},{"decription":"","_id":"5a79f30a6d887752a071b2ee","item_name":"HotChocolate","price":3}] |
-| /restaurants/:RestaurantID/menus/:MenuID/items/:ItemID| GET       | Get menuitem with menuid                                                          | localhost:3000/zappos/api/v1/restaurants/starbucks-san-jose/menus/coffee/items/5a797f026d887752a071a6ae | | 200 | {"decription":"","_id":"5a797f026d887752a071a6ae","item_name":"CoffeeLatte","price":3} |
-| /restaurants/:RestaurantID/menus/:MenuID/items/:ItemID| DELETE    | Delete menuitem with menuid                                                       | localhost:3000/zappos/api/v1/restaurants/starbucks-san-jose/menus/coffee/items/5a797f026d887752a071a6ae | | 200 | |
+| Endpoint                         | HTTP Verb | Functionality                                                               | Example                             | Success Response Code |
+|----------------------------------|-----------|-------------------------------------------------------------------------|-------------------------------------|--------------------------------------------------------------------------------------------------------|
+| /restaurants                                          | GET       | Get list of all the restaurants                                                   | localhost:3000/zappos/api/v1/restaurants                                        | 200 |
+| /restaurants                                          | POST      | Add new restaurant entry in the database. Will return restaurant id as string.    | localhost:3000/zappos/api/v1/restaurants                                        | 201 |
+| /restaurants/:RestaurantID                            | GET       | Get Restaurant information with the generated restaurant ID                       | localhost:3000/zappos/api/v1/restaurants/starbucks-san-jose                     | 200 |
+| /restaurants/:RestaurantID                            | DELETE    | Delete Restaurant information with the generated restaurant ID                    | localhost:3000/zappos/api/v1/restaurants/starbucks-san-jose                     | 204 |
+| /restaurants/:RestaurantID/menus                      | POST      | Add new menu to the restaurant with name. Will return menu id as string           | localhost:3000/zappos/api/v1/restaurants/starbucks-san-jose/menus               | 201 |
+| /restaurants/:RestaurantID/menus                      | GET       | Get all menus of a restaurant as array                                            | localhost:3000/zappos/api/v1/restaurants/starbucks-san-jose/menus               | 200 |
+| /restaurants/:RestaurantID/menus/:MenuID              | GET       | Get single menu of a restaurant with menuid.                                      | localhost:3000/zappos/api/v1/restaurants/starbucks-san-jose/menus/coffee        | 200 |
+| /restaurants/:RestaurantID/menus/:MenuID              | DELETE    | Delete single menu of a restaurant with menuid.                                   | localhost:3000/zappos/api/v1/restaurants/starbucks-san-jose/menus/coffee        | 204 |
+| /restaurants/:RestaurantID/menus/:MenuID/items        | POST      | Add new menu item to the menu. Will return menuitem id.                           | localhost:3000/zappos/api/v1/restaurants/starbucks-san-jose/menus/coffee/items  | 201 |
+| /restaurants/:RestaurantID/menus/:MenuID/items        | GET       | Get all the menu items of the menu as array                                       | localhost:3000/zappos/api/v1/restaurants/starbucks-san-jose/menus/coffee/items  | 200 |
+| /restaurants/:RestaurantID/menus/:MenuID/items/:ItemID| GET       | Get menuitem with menuid                                                          | localhost:3000/zappos/api/v1/restaurants/starbucks-san-jose/menus/coffee/items/5a797f026d887752a071a6ae | 200 |
+| /restaurants/:RestaurantID/menus/:MenuID/items/:ItemID| DELETE    | Delete menuitem with menuid                                                       | localhost:3000/zappos/api/v1/restaurants/starbucks-san-jose/menus/coffee/items/5a797f026d887752a071a6ae | 204 |
 
 
 ## REST API Requests  ##
@@ -86,6 +86,7 @@ BaseURL : localhost:3000/zappos/api/v1
 1. Adding new restaurant
 ```javascript
     POST http://localhost:3000/zappos/api/v1/restaurants
+    201 Created
     {
         "name" : "Starbucks",
         "description": "Starbucks is considered the main representative of second wave coffee, initially distinguishing itself from other coffee-serving venues in the US by taste, quality, and customer experience while popularizing darkly roasted coffee",
@@ -122,12 +123,61 @@ BaseURL : localhost:3000/zappos/api/v1
     GET http://localhost:3000/zappos/api/v1/restaurants/<restaurant-id>
 
     GET http://localhost:3000/zappos/api/v1/restaurants/starbucks-san-jose
+    200 OK
+    {
+        "description": "Starbucks is considered the main representative of second wave coffee, initially distinguishing itself from other coffee-serving venues in the US by taste, quality, and customer experience while popularizing darkly roasted coffee",
+        "contact_no": "(408) 275-9368",
+        "area": "San Jose",
+        "cuisines": [
+            "cafe"
+        ],
+        "menu": [
+            {
+                "menu_items": [
+                    {
+                        "decription": "",
+                        "_id": "5a7c16156d887752a071b3a2",
+                        "item_name": "Coffee Latte",
+                        "price": 3
+                    },
+                    {
+                        "decription": "",
+                        "item_name": "Caffe Mocha",
+                        "price": 4
+                    }
+                ],
+                "_id": "5a7c16156d887752a071b3a0",
+                "menu_type": "Coffee",
+                "menu_id": "coffee"
+            },
+            {
+                "menu_items": [
+                    {
+                        "decription": "",
+                        "item_name": "Classic Chai Tea Latte",
+                        "price": 2
+                    }
+                ],
+                "menu_type": "Tea",
+                "menu_id": "tea"
+            }
+        ],
+        "locality_count": 0,
+        "timestamp": "Tue Feb 06 2018 01:45:33 GMT-0800 (PST)",
+        "id": "starbucks-san-jose",
+        "name": "Starbucks",
+    }
+
+
+    
 ```
 3. Delete restaurant 
 ```javascript
     DELETE http://localhost:3000/zappos/api/v1/restaurants/<restaurant-id>
 
     DELETE http://localhost:3000/zappos/api/v1/restaurants/starbucks-san-jose
+    204 No Content
+
 ```
 
 
@@ -136,6 +186,7 @@ BaseURL : localhost:3000/zappos/api/v1
     POST http://localhost:3000/zappos/api/v1/restaurants/<restaurant-id>/menus
     
     POST http://localhost:3000/zappos/api/v1/restaurants/starbucks-san-jose/menus
+    201 Created
     {
 	"menu_type" :	"Hot Drinks",
 	"menu_items":	[{
@@ -156,12 +207,31 @@ BaseURL : localhost:3000/zappos/api/v1
     GET http://localhost:3000/zappos/api/v1/restaurants/<restaurant-id>/menus/<menu_type>
 
     GET http://localhost:3000/zappos/api/v1/restaurants/starbucks-san-jose/menus/coffee
+    200 OK
+    {
+        "menu_items": [
+            {
+                "decription": "",
+                "item_name": "Coffee Latte",
+                "price": 3
+            },
+            {
+                "decription": "",
+                "item_name": "Caffe Mocha",
+                "price": 4
+            }
+        ],
+        "menu_type": "Coffee",
+        "menu_id": "coffee"
+    }
+
 ```
 6. Delete Menu
 ```javascript
     DELETE http://localhost:3000/zappos/api/v1/restaurants/<restaurant-id>/menus/<menu_type>
 
     DELETE http://localhost:3000/zappos/api/v1/restaurants/starbucks-san-jose/menus/coffee
+    204 No Content
 ```
 
 
@@ -170,6 +240,7 @@ BaseURL : localhost:3000/zappos/api/v1
     POST http://localhost:3000/zappos/api/v1/restaurants/<restaurant-id>/menus/<menu_type>/items
 
     POST http://localhost:3000/zappos/api/v1/restaurants/starbucks-san-jose/menus/coffee/items
+    201 Created
     {
         "item_name": "Hot Chocolate",
         "Description": "hot milk drink with chocolate cyrup",
@@ -181,11 +252,25 @@ BaseURL : localhost:3000/zappos/api/v1
 8. Get MenuItem
 ```javascript
     GET http://localhost:3000/zappos/api/v1/restaurants/<restaurant-id>/menus/<menu_type>/items/<item_id>
+
+
+    GET http://localhost:3000/zappos/api/v1/restaurants/starbucks-san-jose/menus/coffee/items/5a7c16156d887752a071b3a2
+    200 OK
+    {
+        "decription": "",
+        "_id": "5a7c16156d887752a071b3a2",
+        "item_name": "Coffee Latte",
+        "price": 3
+    }
+
 ```
 
 9. Delete MenuItem
 ```javascript
     DELETE http://localhost:3000/zappos/api/v1/restaurants/<restaurant-id>/menus/<menu_type>/items/<item_id>
+
+    DELETE http://localhost:3000/zappos/api/v1/restaurants/starbucks-san-jose/menus/coffee/items/5a7c16156d887752a071b3a2
+    204 No Content
 ```
 
 
